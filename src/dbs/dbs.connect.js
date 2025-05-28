@@ -1,11 +1,20 @@
-'use strict'
+"use strict";
 
-const {default: mongoose} = require('mongoose')
+const { default: mongoose } = require("mongoose");
+require("dotenv").config();
 
-const connectString = 'mongodb://localhost:27017/di-cho-tien-loi'
+const connectString =
+  process.env.ENVIRONMENT === "dev"
+    ? process.env.DB_URL_TEST
+    : process.env.DB_URL;
 
-mongoose.connect(connectString)
-    .then(_=> console.log("Connect MongoDB successfully!!"))
-    .catch(error => console.log("Connect error!!"))
+mongoose
+  .connect(connectString)
+  .then((_) => console.log("Connect MongoDB successfully!!"))
 
-module.exports = mongoose
+  .catch((error) => {
+    console.log("Connect error!!");
+    console.error(error);
+  });
+
+module.exports = mongoose;
